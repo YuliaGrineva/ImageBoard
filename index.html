@@ -1,10 +1,70 @@
-<!doctype html>
+<!DOCTYPE html>
 <html>
-<head>
-    <meta charset="utf-8">
-    <title></title>
-</head>
-<body>
-    <script src="/js/app.js" type="module" crossorigin="use-credentials"></script>
-</body>
+    <head>
+        <meta charset="utf-8" />
+        <title>Vue is bomb</title>
+        <link rel="stylesheet" href="style.css" />
+    </head>
+    <body>
+        <div id="main">
+            <div id="uploader">
+                <h1>Add your favorite Paul Klee's angel!</h1>
+                <form @submit="handleSubmit">
+                    <div id="fields">
+                        <p>
+                            Title
+                            <input type="text" name="title" v-model="title" />
+                        </p>
+                        <p>
+                            Description
+                            <input
+                                type="text"
+                                name="description"
+                                v-model="description"
+                            />
+                        </p>
+                        <p>
+                            Username
+                            <input
+                                type="text"
+                                name="username"
+                                v-model="username"
+                            />
+                        </p>
+                    </div>
+
+                    <input
+                        name="image"
+                        type="file"
+                        accept="image/*"
+                        @change="handleFileChange"
+                    />
+                    <br />
+
+                    <button>Upload</button>
+                </form>
+            </div>
+             <h3>Latest images</h3>
+            <div id="images">
+               
+                <div id="bild" v-for="img in images" >
+                    <img v-bind:src="img.url" @click="onImgClick(img.id)" />
+                    <h4>{{img.title}}</h4>
+                </div>
+            </div>
+          
+                <selected-image v-if="selectedImage"
+                    :id="selectedImage"
+                    @close="clickOnX">
+                </selected-image>
+
+                </div>
+            </div> 
+        </div>
+        <script
+            src="/js/app.js"
+            type="module"
+            crossorigin="use-credentials"
+        ></script>
+    </body>
 </html>
