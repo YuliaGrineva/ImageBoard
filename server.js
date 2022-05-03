@@ -33,7 +33,6 @@ app.use(express.urlencoded({ extended: false }));
 app.get("/images.json", (req, res) => {
     console.log("here");
     db.getAllImages().then((result) => {
-        console.log("result", result);
         res.json(result.rows);
     });
 });
@@ -82,20 +81,32 @@ app.post("/image", uploader.single("image"), s3.upload, (req, res) => {
     }
 });
 
-app.get("*", (req, res) => {
-    res.sendFile(`${__dirname}/index.html`);
-});
 
-app.get("/image/:image_id", (request, response) => {
-    getImageById(imageId).then((image) => {
+
+app.get("/image/:id", (req, res) => {
+    console.log("req.params.id ", req.params.id);
+    db.getImageById(req.params.id).then((image) => {
+        console.log("IMG ON DB REQUEST ", image);
         if (!image) {
-            response.status(404).json({
+            res.status(404).json({
                 message: "Image not found",
             });
             return;
         }
-        response.json(image);
+        res.json(image);
     });
+});
+
+app.get("/comments/:id", (req, res) => {
+    
+});
+
+app.post("/comment/", (req, res) => {
+    
+});
+
+app.get("*", (req, res) => {
+    res.sendFile(`${__dirname}/index.html`);
 });
 
 app.listen(8080, () => console.log(`I'm listening.`));

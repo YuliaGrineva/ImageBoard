@@ -28,10 +28,10 @@ function insertImage(url, username, title, description) {
     return db.query(query, params).then((result) => result.rows[0]);
 }
 
-// // function getImageById(id){
-// //    const query =  
-// //
-// getImageById
-// }
+function getImageById(id) {
+    const query = `SELECT * FROM images WHERE id = $1`;
+    const params = [id];
+    return db.query(query, params);
+}
 
-module.exports = { getAllImages, insertImage };
+module.exports = { getAllImages, insertImage, getImageById };

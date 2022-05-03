@@ -7,7 +7,7 @@
     </head>
     <body>
         <div id="main">
-            <div id="uploader">
+            <div id="uploader" >
                 <h1>Add your favorite Paul Klee's angel!</h1>
                 <form @submit="handleSubmit">
                     <div id="fields">
@@ -53,13 +53,21 @@
                 </div>
             </div>
           
-                <selected-image v-if="selectedImage"
-                    :id="selectedImage"
+                <selected-image 
+                    v-if="selectedImage"
+                    :selected-image="selectedImage"
                     @close="clickOnX">
+
+                    <comments-component 
+                        v-if="comment"
+                        :comments-component="comment"
+                        @click="clickSubmit">
+
+                    </comments-component>
+
                 </selected-image>
 
-                </div>
-            </div> 
+                
         </div>
         <script
             src="/js/app.js"

@@ -1,6 +1,9 @@
 body {
     background-color: rgb(103, 167, 167);
     font-family: Cambria, Cochin, Georgia, Times, "Times New Roman", serif;
+    position: relative;
+    width: 100vw;
+    height: 100vh;
 }
 h1 {
     text-align: center;
@@ -39,8 +42,6 @@ form {
 }
 
 #selectedImg {
-    height: 50%;
-    width: 80%;
     background-color: black;
 }
 
@@ -61,4 +62,45 @@ p {
 
 h3 {
     padding-left: 50px;
+}
+
+.image-view {
+    position: absolute;
+    z-index: 10;
+    height: 90%;
+    width: 80%;
+    top: 20px;
+    background-color: rgba(0, 0, 0, 0.9);
+    left: 50%;
+    transform: translateX(-50%);
+    display: flex;
+    justify-content: center;
+    flex-direction: column;
+    align-items: center;
+    color: azure;
+}
+
+#bigImg {
+    height: 450px;
+    width: 450px;
+}
+
+#title {
+    font-size: 28px;
+}
+
+#description,
+#username {
+    font-size: 18px;
+}
+
+#username {
+    font-style: italic;
+}
+
+#close {
+    font-size: 28px;
+    right: 10px;
+    align-self: flex-end;
+    padding-right: 20px;
 }

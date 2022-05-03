@@ -1,10 +1,11 @@
 import * as Vue from "./vue.js";
 import selectedImage from "./selected-image.js";
+import comment from "./comments-component.js";
 
 const app = Vue.createApp({
     data() {
         return {
-            selectedImage: {},
+            selectedImage: null,
             images: [],
             title: "",
             description: "",
@@ -22,6 +23,7 @@ const app = Vue.createApp({
     },
     components: {
         "selected-image": selectedImage,
+        "comments-component": comment,
     },
     methods: {
         handleSubmit(e) {
@@ -53,13 +55,14 @@ const app = Vue.createApp({
             console.log("Handle File Change");
             this.image = e.target.files[0];
         },
-        onImgClick(selectedImage) {
-            console.log("ich klicke on", selectedImage);
-            this.selectedImage = selectedImage;
-            console.log(selectedImage);
+        onImgClick(image_id) {
+            console.log("ich klicke on", image_id);
+            this.selectedImage = image_id;
+            console.log(image_id);
         },
         clickOnX() {
-            this.imageView = null;
+            console.log("gdfgdgdggdd");
+            this.selectedImage = null;
         },
     },
 });
