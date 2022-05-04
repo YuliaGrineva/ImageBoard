@@ -1,3 +1,4 @@
+import comment from "./comments-component.js";
 const selectedImage = {
     data() {
         return {
@@ -5,6 +6,7 @@ const selectedImage = {
             url: "",
             username: "",
             description: "",
+            created_at: "",
             // selectedImage: null,
         };
     },
@@ -24,6 +26,7 @@ const selectedImage = {
                 this.url = image.rows[0].url;
                 this.username = image.rows[0].username;
                 this.description = image.rows[0].description;
+                this.created_at = image.rows[0].created_at;
             })
             .catch((error) => {
                 console.log(error);
@@ -33,13 +36,29 @@ const selectedImage = {
         clickOnX() {
             this.$emit("close");
         },
+        clickOnBackground(event) {
+            if (event.target.classList.contains("image-view-wrapper")) {
+                // hast du auf den hintergrund geclickt
+                this.$emit("close");
+            }
+        },
     },
-    template: `<div class="image-view" >
-        <p id="close" @click="clickOnX">X</p>
-        <img :src="url" id="bigImg" @click="clickOnX"/>
-        <p id="title">{{this.title}}</p>
-        <p id="description" >{{this.description}}</p>
-        <p id="username">{{this.username}}</p>
+    components: {
+        "comments-component": comment,
+    },
+    template: `
+   <div class="image-view-wrapper" @click="clickOnBackground">
+        <div class="image-view" >
+            <p id="close" @click="clickOnX">X</p>
+            <img :src="url" id="bigImg"/>
+            <p id="title">{{this.title}}</p>
+            <p id="description" >{{this.description}}</p>
+            <p id="username">Uploaded by {{this.username}} on {{this.created_at}}</p>
+                <comments-component 
+                    v-if="selectedImage"
+                    :selected-image="selectedImage">
+                </comments-component>
+        </div>
 
     </div>`,
 };

@@ -1,5 +1,6 @@
 import * as Vue from "./vue.js";
 import selectedImage from "./selected-image.js";
+
 import comment from "./comments-component.js";
 
 const app = Vue.createApp({
@@ -23,7 +24,6 @@ const app = Vue.createApp({
     },
     components: {
         "selected-image": selectedImage,
-        "comments-component": comment,
     },
     methods: {
         handleSubmit(e) {

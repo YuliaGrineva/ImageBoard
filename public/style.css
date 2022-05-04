@@ -80,9 +80,21 @@ h3 {
     color: azure;
 }
 
+.image-view-wrapper {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: rgba(0, 0, 0, 0.3);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
 #bigImg {
-    height: 450px;
-    width: 450px;
+    height: 400px;
+    width: 400px;
 }
 
 #title {
@@ -96,6 +108,12 @@ h3 {
 
 #username {
     font-style: italic;
+    font-size: 14px;
+}
+
+#username2 {
+    font-style: italic;
+    font-size: 14px;
 }
 
 #close {
@@ -103,4 +121,13 @@ h3 {
     right: 10px;
     align-self: flex-end;
     padding-right: 20px;
+}
+
+#commentsAray {
+    background-color: rgba(128, 128, 128, 0.4);
+    height: 15%;
+    width: 80%;
+    padding-bottom: 5px;
+    margin-bottom: 5px;
+    overflow: scroll;
 }

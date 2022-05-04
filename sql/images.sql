@@ -38,7 +38,7 @@ CREATE TABLE comments(
     username VARCHAR NOT NULL,
     comment VARCHAR NOT NULL,
     created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
-    image_id INT NOT NULL UNIQUE REFERENCES images(id)
+    image_id INT NOT NULL REFERENCES images(id)
 );
 
 INSERT INTO comments (username, comment, image_id) VALUES (

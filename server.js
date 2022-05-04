@@ -81,8 +81,6 @@ app.post("/image", uploader.single("image"), s3.upload, (req, res) => {
     }
 });
 
-
-
 app.get("/image/:id", (req, res) => {
     console.log("req.params.id ", req.params.id);
     db.getImageById(req.params.id).then((image) => {
@@ -97,12 +95,25 @@ app.get("/image/:id", (req, res) => {
     });
 });
 
-app.get("/comments/:id", (req, res) => {
-    
+app.get("/comment/:id", (req, res) => {
+    console.log("Im HEREEEEE");
+    const { id } = req.params;
+
+    console.log("ID", id);
+    db.getAllCommentsById(id).then((comments) => {
+        res.json(comments.rows);
+    });
 });
 
 app.post("/comment/", (req, res) => {
-    
+    const { comment, username, selectedImage } = req.body;
+    console.log("comment", comment, username, selectedImage);
+    db.createComment(comment, username, selectedImage)
+        .then((comment) => {
+            console.log(comment);
+            res.json(comment.rows[0]);
+        })
+        .catch((err) => console.log("something went wrong with comments", err));
 });
 
 app.get("*", (req, res) => {

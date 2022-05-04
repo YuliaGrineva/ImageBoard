@@ -34,4 +34,26 @@ function getImageById(id) {
     return db.query(query, params);
 }
 
-module.exports = { getAllImages, insertImage, getImageById };
+function getAllCommentsById(id) {
+    const query = `SELECT * FROM comments WHERE id = $1`;
+    const params = [id];
+    return db.query(query, params);
+}
+
+function createComment(comment, username, image_id) {
+    const query = `INSERT INTO comments (comment, username, image_id)
+        VALUES ($1, $2, $3)
+        RETURNING *
+        `;
+    const params = [comment, username, image_id];
+    return db.query(query, params);
+}
+
+
+module.exports = {
+    getAllImages,
+    insertImage,
+    getImageById,
+    getAllCommentsById,
+    createComment,
+};
