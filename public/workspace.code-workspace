@@ -1,0 +1,12 @@
+{
+    "folders": [
+		{
+			"name": "aspartame-code",
+			"path": "../.."
+		},
+		{
+			"path": "../../../aspartame-petition"
+		}
+	],
+    "settings": {}
+}

@@ -13,9 +13,18 @@ const app = Vue.createApp({
             username: "",
             image: null,
             id: null,
+            moreImages: true,
         };
     },
     mounted() {
+        addEventListener("popstate", () => {
+            this.selectedImage = location.pathname.slice(1);
+        });
+        window.addEventListener("scroll", this.scroll);
+        const idFromUrl = location.pathname.slice(1);
+        this.selectedImage = idFromUrl;
+        console.log(this.selectedImage);
+
         fetch("/images.json")
             .then((resp) => resp.json())
             .then((resp) => {
@@ -48,21 +57,52 @@ const app = Vue.createApp({
                 })
                 .then((allImages) => {
                     this.images.unshift(allImages);
+                    this.title = "";
+                    this.description = "";
+                    this.username = "";
                 });
         },
 
         handleFileChange(e) {
             console.log("Handle File Change");
             this.image = e.target.files[0];
+            console.log(this.image);
         },
         onImgClick(image_id) {
             console.log("ich klicke on", image_id);
             this.selectedImage = image_id;
             console.log(image_id);
+            history.pushState({}, "", this.selectedImage);
         },
         clickOnX() {
             console.log("gdfgdgdggdd");
             this.selectedImage = null;
+            history.pushState({}, "", "/");
+        },
+        clickOnMore() {
+            console.log("more clicked");
+            console.log(this.images.length);
+            const biggestId = this.images[this.images.length - 1].id;
+            console.log("biggest ID", biggestId);
+            fetch("/more/" + biggestId)
+                .then((images) => images.json())
+                .then((image) => {
+                    if (image.length) {
+                        const biggestId = image[0].biggestId;
+                        for (let i = 0; i < image.length; i++) {
+                            if (biggestId === image[i].id) {
+                                this.seen = false;
+                            }
+                        }
+                    }
+                    this.images = [...this.images, ...image];
+                    if (image.length === 0) {
+                        this.moreImages = false;
+                    }
+                })
+                .catch((err) => {
+                    console.log("something went wrong with more button", err);
+                });
         },
     },
 });

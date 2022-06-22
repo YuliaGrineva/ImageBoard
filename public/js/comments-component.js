@@ -48,28 +48,30 @@ const comment = {
                 .then((response) => {
                     console.log("RESPONSE", response);
                     this.comments.push(response);
-                    return response;
+                    this.comment = "";
+                    this.username = "";
                     //response.rows[0];
                 });
         },
     },
     template: `
-    <p>Add a Comment!</p>
+    <h3>Add a Comment!</h3>
     <div id="commentsField">
     <p>Comment
-        <input type="text" name="comment" v-model="comment" />
+        <textarea type="text" name="comment" v-model="comment" placeholder="Enter your comment" rows="2"></textarea>
     </p>
     <p>Username
         <input type="text" name="username" v-model="username"/>
     </p>
     <button @click="clickSubmit">Submit</button>
     </div>
+    
     <div id="commentsAray">
-    <div v-for="comment in comments" >
+    
     <ul>
-    <li>{{comment.username}}: {{comment.comment}} <br> <div id="username2"> on {{comment.created_at}} </div></li>
+    <li v-for="comment in comments">{{comment.username}}: {{comment.comment}} <br> <div id="username2"> on {{comment.created_at}} </div></li>
     </ul>
-    </div>
+   
     </div>
     `,
 };

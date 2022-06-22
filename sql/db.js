@@ -13,12 +13,32 @@ function getAllImages() {
     const query = `
         SELECT * FROM images
         ORDER BY id DESC 
+        LIMIT 3
+        
     `;
 
     const params = [];
 
     return db.query(query, params);
 }
+
+function moreImages(lastId) {
+    const query = `
+        SELECT *, (SELECT id FROM images
+        ORDER BY id DESC 
+        LIMIT 1)
+        AS lowestId FROM images
+WHERE id < $1
+ORDER BY id DESC
+LIMIT 3;
+
+    `;
+
+    const params = [lastId];
+
+    return db.query(query, params);
+}
+
 function insertImage(url, username, title, description) {
     const query = `INSERT INTO images (url, username, title, description)
         VALUES ($1, $2, $3, $4)
@@ -34,9 +54,9 @@ function getImageById(id) {
     return db.query(query, params);
 }
 
-function getAllCommentsById(id) {
-    const query = `SELECT * FROM comments WHERE id = $1`;
-    const params = [id];
+function getAllCommentsById(image_id) {
+    const query = `SELECT * FROM comments WHERE image_id = $1`;
+    const params = [image_id];
     return db.query(query, params);
 }
 
@@ -49,11 +69,11 @@ function createComment(comment, username, image_id) {
     return db.query(query, params);
 }
 
-
 module.exports = {
     getAllImages,
     insertImage,
     getImageById,
     getAllCommentsById,
     createComment,
+    moreImages,
 };

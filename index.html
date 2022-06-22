@@ -7,7 +7,7 @@
     </head>
     <body>
         <div id="main">
-            <div id="uploader" >
+            <div id="uploader">
                 <h1>Add your favorite Paul Klee's angel!</h1>
                 <form @submit="handleSubmit">
                     <div id="fields">
@@ -33,35 +33,38 @@
                         </p>
                     </div>
 
-                    <input
-                        name="image"
-                        type="file"
-                        accept="image/*"
-                        @change="handleFileChange"
-                    />
+                    <div>
+                        <!-- <button for="file" onclick="$('#input').click()" class="btn">Select Image</button> -->
+                        <input
+                            id="file"
+                            name="image"
+                            type="file"
+                            accept="image/*"
+                            @change="handleFileChange"
+                            
+                        />
+                    </div>
                     <br />
 
                     <button>Upload</button>
                 </form>
             </div>
-             <h3>Latest images</h3>
+            <h3 id="latestImages">Latest images</h3>
             <div id="images">
-               
-                <div id="bild" v-for="img in images" >
+                <div id="bild" v-for="img in images">
                     <img v-bind:src="img.url" @click="onImgClick(img.id)" />
                     <h4>{{img.title}}</h4>
                 </div>
             </div>
-          
-                <selected-image 
-                    v-if="selectedImage"
-                    :selected-image="selectedImage"
-                    @close="clickOnX">
 
+            <selected-image
+                v-if="selectedImage"
+                :selected-image="selectedImage"
+                @close="clickOnX"
+            >
+            </selected-image>
 
-                </selected-image>
-
-                
+            <button @click="clickOnMore" v-if="moreImages">More</button>
         </div>
         <script
             src="/js/app.js"

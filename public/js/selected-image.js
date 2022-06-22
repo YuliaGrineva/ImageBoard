@@ -2,12 +2,7 @@ import comment from "./comments-component.js";
 const selectedImage = {
     data() {
         return {
-            title: "",
-            url: "",
-            username: "",
-            description: "",
-            created_at: "",
-            // selectedImage: null,
+            image: {},
         };
     },
     props: ["selected-image"],
@@ -21,12 +16,8 @@ const selectedImage = {
                 return response.json();
             })
             .then((image) => {
-                console.log("data im fetch", image.rows[0]);
-                this.title = image.rows[0].title;
-                this.url = image.rows[0].url;
-                this.username = image.rows[0].username;
-                this.description = image.rows[0].description;
-                this.created_at = image.rows[0].created_at;
+                console.log("data im fetch", image);
+                this.image = image;
             })
             .catch((error) => {
                 console.log(error);
@@ -49,15 +40,21 @@ const selectedImage = {
     template: `
    <div class="image-view-wrapper" @click="clickOnBackground">
         <div class="image-view" >
-            <p id="close" @click="clickOnX">X</p>
-            <img :src="url" id="bigImg"/>
-            <p id="title">{{this.title}}</p>
-            <p id="description" >{{this.description}}</p>
-            <p id="username">Uploaded by {{this.username}} on {{this.created_at}}</p>
-                <comments-component 
+    
+
+        <p id="close" @click="clickOnX">X</p>
+        <div id="commentsleft">
+            <img :src="image.url" id="bigImg"/>
+            <h2 id="title">{{image.title}}</h2>
+            <h4 id="description" >{{image.description}}</h4>
+            <h4 id="username">Uploaded by {{image.username}} on {{image.created_at}}</h4>    
+            </div>
+            <div id="commentsdiv">
+            <comments-component 
                     v-if="selectedImage"
                     :selected-image="selectedImage">
-                </comments-component>
+            </comments-component>
+            </div>
         </div>
 
     </div>`,

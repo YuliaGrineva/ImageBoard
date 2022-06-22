@@ -1,3 +1,4 @@
+
 const express = require("express");
 const app = express();
 const db = require("./sql/db");
@@ -66,12 +67,15 @@ app.post("/image", uploader.single("image"), s3.upload, (req, res) => {
     const url = `https://s3.amazonaws.com/spicedling/${req.file.filename}`;
 
     if (req.file) {
-        db.insertImage(url, username, title, description).then(
+        db.insertImage(url, username, title, description).then((data) =>
+
             res.json({
                 url: url,
                 username: username,
                 title: title,
                 description: description,
+                id: data.id,
+
             })
         );
     } else {
@@ -79,6 +83,19 @@ app.post("/image", uploader.single("image"), s3.upload, (req, res) => {
             sucsess: false,
         });
     }
+});
+
+app.get("/more/:biggestId", (req, res) => {
+    const lastId = req.params.biggestId;
+    console.log("last ID is ", lastId);
+    db.moreImages(lastId)
+        .then((images) => {
+            res.json(images.rows);
+            console.log("selected images are", images.rows);
+        })
+        .catch((err) =>
+            console.log("something went wrong with more button", err)
+        );
 });
 
 app.get("/image/:id", (req, res) => {
@@ -91,7 +108,7 @@ app.get("/image/:id", (req, res) => {
             });
             return;
         }
-        res.json(image);
+        res.json(image.rows[0]);
     });
 });
 
@@ -120,4 +137,4 @@ app.get("*", (req, res) => {
     res.sendFile(`${__dirname}/index.html`);
 });
 
-app.listen(8080, () => console.log(`I'm listening.`));
+
