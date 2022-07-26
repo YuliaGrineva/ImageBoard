@@ -7,7 +7,6 @@ if (process.env.NODE_ENV == "production") {
 } else {
     secrets = require("./secrets"); // in dev they are in secrets.json which is listed in .gitignore
 }
-console.log("secrets", secrets);
 
 
 const s3 = new aws.S3({
@@ -16,9 +15,7 @@ const s3 = new aws.S3({
 });
 
 module.exports.upload = (req, res, next) => {
-    console.log(req);
     if (!req.file) {
-        console.log("no file received");
         return res.sendStatus(500); // user didn't provide an img or sth went wrong with multer
     }
 
@@ -36,7 +33,6 @@ module.exports.upload = (req, res, next) => {
 
     promise
         .then(() => {
-            console.log("yay your image is in the ☁️");
             next();
             // if our img is uploaded to the cloud we can go ahead and remove it from the temp
             // directory on the webserver called uploads

@@ -9,27 +9,20 @@ const comment = {
     },
     props: ["selected-image"],
     mounted() {
-        console.log("props: ", this.$.props.selectedImage);
         const thisComment = "/comment/" + this.$.props.selectedImage;
-        console.log("comment ", thisComment);
         fetch(thisComment)
             .then((response) => {
-                console.log(response);
                 return response.json();
             })
             .then((response) => {
-                console.log("comments array", response);
                 this.comments = response;
-                //   this.username = image.rows[0].username;
-                // this.comment = image.rows[0].comment;
+                
             })
             .catch((error) => {
-                console.log(error);
             });
     },
     methods: {
         clickSubmit() {
-            console.log(this.username, this.comment, this.selectedImage);
             const comment = JSON.stringify({
                 username: this.username,
                 comment: this.comment,
@@ -46,11 +39,9 @@ const comment = {
                     return response.json();
                 })
                 .then((response) => {
-                    console.log("RESPONSE", response);
                     this.comments.push(response);
                     this.comment = "";
                     this.username = "";
-                    //response.rows[0];
                 });
         },
     },

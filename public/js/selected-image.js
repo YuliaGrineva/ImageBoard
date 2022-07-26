@@ -7,20 +7,15 @@ const selectedImage = {
     },
     props: ["selected-image"],
     mounted() {
-        console.log("props: ", this.$.props.selectedImage);
         const url = "/image/" + this.$.props.selectedImage;
-        console.log("URL: ", url);
         fetch(url)
             .then((response) => {
-                console.log(response);
                 return response.json();
             })
             .then((image) => {
-                console.log("data im fetch", image);
                 this.image = image;
             })
             .catch((error) => {
-                console.log(error);
             });
     },
     methods: {
@@ -29,7 +24,6 @@ const selectedImage = {
         },
         clickOnBackground(event) {
             if (event.target.classList.contains("image-view-wrapper")) {
-                // hast du auf den hintergrund geclickt
                 this.$emit("close");
             }
         },

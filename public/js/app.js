@@ -23,7 +23,7 @@ const app = Vue.createApp({
         window.addEventListener("scroll", this.scroll);
         const idFromUrl = location.pathname.slice(1);
         this.selectedImage = idFromUrl;
-        console.log(this.selectedImage);
+
 
         fetch("/images.json")
             .then((resp) => resp.json())
@@ -64,26 +64,18 @@ const app = Vue.createApp({
         },
 
         handleFileChange(e) {
-            console.log("Handle File Change");
             this.image = e.target.files[0];
-            console.log(this.image);
         },
         onImgClick(image_id) {
-            console.log("ich klicke on", image_id);
             this.selectedImage = image_id;
-            console.log(image_id);
             history.pushState({}, "", this.selectedImage);
         },
         clickOnX() {
-            console.log("gdfgdgdggdd");
             this.selectedImage = null;
             history.pushState({}, "", "/");
         },
         clickOnMore() {
-            console.log("more clicked");
-            console.log(this.images.length);
             const biggestId = this.images[this.images.length - 1].id;
-            console.log("biggest ID", biggestId);
             fetch("/more/" + biggestId)
                 .then((images) => images.json())
                 .then((image) => {
@@ -108,5 +100,3 @@ const app = Vue.createApp({
 });
 
 app.mount("#main");
-
-console.log("lalala");
